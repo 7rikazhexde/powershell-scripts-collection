@@ -8,6 +8,7 @@ WSL（Windows Subsystem for Linux）のフォルダ構造をGUI(WPF)で表示し
  - エクスプローラーでフォルダを開く
  - WSL上のVSCodeでフォルダを開く
  - 上位フォルダへの移動
+ - フォルダの昇順・降順表示
 
 .PARAMETER Debug
 デバッグモードを有効にします。操作時の詳細な出力が表示されます。
@@ -62,7 +63,7 @@ function Suppress-Output {
 }
 
 # 初期フォルダ
-$currentPath = "\\wsl.localhost\Ubuntu\home\narikazhexde001\dev"
+$currentPath = "\\wsl.localhost\Ubuntu\home"
 Write-Debug "Initial Path: $currentPath"
 
 # WPFのXAML定義
@@ -77,7 +78,11 @@ $xaml = @"
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="デフォルトパス：" Grid.Row="0" Margin="0,0,0,5"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,5">
+            <TextBlock Text="デフォルトパス：" Margin="0,0,10,0"/>
+            <RadioButton Name="AscendingSort" Content="昇順" IsChecked="True" Margin="0,0,10,0"/>
+            <RadioButton Name="DescendingSort" Content="降順"/>
+        </StackPanel>
         <TextBox Name="DefaultPathBox" Grid.Row="1" Margin="0,0,0,10" Height="25"/>
         <ListBox Name="FolderList" Grid.Row="2" Margin="0,0,0,10"/>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -102,6 +107,8 @@ $upButton = $window.FindName("UpButton")
 $openButton = $window.FindName("OpenButton")
 $vscodeButton = $window.FindName("VSCodeButton")
 $cancelButton = $window.FindName("CancelButton")
+$ascendingSort = $window.FindName("AscendingSort")
+$descendingSort = $window.FindName("DescendingSort")
 
 Write-Debug "Controls loaded successfully"
 
@@ -116,7 +123,14 @@ function UpdateFolderList {
     Suppress-Output $folderList.Items.Clear()
 
     try {
-        $folders = Get-ChildItem -Path $path -Directory
+        # 昇順・降順の設定に基づいてソート
+        if ($ascendingSort.IsChecked) {
+            $folders = Get-ChildItem -Path $path -Directory | Sort-Object Name
+            Write-Debug "Sorting folders in ascending order"
+        } else {
+            $folders = Get-ChildItem -Path $path -Directory | Sort-Object Name -Descending
+            Write-Debug "Sorting folders in descending order"
+        }
         Write-Debug "Found $($folders.Count) folders"
         
         foreach ($folder in $folders) {
@@ -204,6 +218,17 @@ $vscodeButton.Add_Click({
 $cancelButton.Add_Click({ 
     Write-Debug "Cancel button clicked"
     $window.Close() 
+})
+
+# イベントハンドラ: ソート順変更時に一覧を更新
+$ascendingSort.Add_Checked({
+    Write-Debug "Sort order changed to ascending"
+    Suppress-Output (UpdateFolderList $defaultPathBox.Text)
+})
+
+$descendingSort.Add_Checked({
+    Write-Debug "Sort order changed to descending"
+    Suppress-Output (UpdateFolderList $defaultPathBox.Text)
 })
 
 # イベントハンドラ: フォルダをダブルクリックした場合に移動
