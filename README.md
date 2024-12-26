@@ -1,6 +1,6 @@
 # powershell-scripts-collection
 
-日常的なWindowsおよびWSL（Windows Subsystem for Linux）の操作を簡素化するPowerShellスクリプト集です。
+Windowsとそのアプリケーション、およびWSL（Windows Subsystem for Linux）の操作を簡素化するPowerShellスクリプト集です。
 
 ## スクリプト一覧
 
@@ -53,26 +53,26 @@ PowerShellスクリプト（.ps1）のショートカットを作成するため
 PowerShellスクリプトを実行するには、適切な実行ポリシーを設定する必要があります。
 以下のいずれかの方法で設定してください。
 
-1. 一時的にプロセスの実行ポリシーを変更（推奨）
+- 一時的にプロセスの実行ポリシーを変更（推奨）
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
 
-1. 現在のユーザーに対して実行ポリシーを変更
+- 現在のユーザーに対して実行ポリシーを変更
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-1. スクリプトをローカルで信頼済みとして扱う
+- スクリプトをローカルで信頼済みとして扱う
 
 スクリプトが信頼できるものであることが確実であれば、スクリプトファイルのプロパティを変更する方法もあります。
 
 1. スクリプトファイルを右クリックし、「プロパティ」を選択。
 2. 「全般」タブの下部にある「ブロックの解除」チェックボックスを有効にする。
 3. 「適用」または「OK」をクリック。
-4. 再度スクリプトを実行します。
+4. 再度スクリプトを実行する。
 
 ## ライセンス
 
