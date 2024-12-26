@@ -61,7 +61,7 @@ PowerShellスクリプト（.ps1）のショートカットを作成するため
 ### 要件
 
 - Windows 10/11
-- PowerShell 5.1以上
+- PowerShell 5.1以上、または、PowerShell Core (pwsh)
 - WSL2（WSL関連スクリプトの場合）
 - .NET Framework（GUIツールの場合）
 

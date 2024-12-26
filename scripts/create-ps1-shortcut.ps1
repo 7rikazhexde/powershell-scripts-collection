@@ -4,7 +4,9 @@ PowerShellスクリプト（.ps1）用のショートカット作成GUIツール
 
 .DESCRIPTION
 このスクリプトはPowerShellスクリプト（.ps1）のショートカットを作成するためのGUIツールです。
-以下の機能を提供します：
+スクリプト実行はPowerShell Core (pwsh)を優先的に使用し、未インストールの場合はWindows PowerShell (powershell.exe)にフォールバックします。
+
+機能：
 - GUIによるps1ファイルの選択
 - 選択したスクリプトと同じディレクトリにショートカットを作成
 - ショートカット作成後の設定ガイド表示
@@ -17,10 +19,15 @@ PowerShellスクリプト（.ps1）用のショートカット作成GUIツール
 .NOTES
 ファイル名: create-ps1-shortcut.ps1
 作成者: 7rikazhexde
-作成日: 2024/01/01
-バージョン: 0.1
+作成日: 2024/12/26
+バージョン: 0.1.1
 
 このスクリプトはUTF-8 with BOM エンコーディングで保存してください。
+
+PowerShell実行環境に関する注意事項:
+1. PowerShell Core (pwsh)が利用可能な場合、優先的に使用されます
+2. PowerShell Coreが未インストールの場合、自動的にWindows PowerShell (powershell.exe)が使用されます
+3. PowerShell Coreのインストールを推奨します（https://github.com/PowerShell/PowerShell）
 
 実行時の注意事項：
 1. ショートカットをタスクバーにピン留めする場合:
@@ -72,6 +79,29 @@ function Show-FileDialog {
     return $null
 }
 
+function Get-PowerShellPath {
+    [CmdletBinding()]
+    param()
+    
+    Write-Debug "PowerShellパスを取得"
+    try {
+        # pwshが利用可能かチェック
+        $pwshPath = Get-Command pwsh -ErrorAction SilentlyContinue
+        if ($pwshPath) {
+            Write-Debug "PowerShell Core (pwsh)が見つかりました: $($pwshPath.Source)"
+            return $pwshPath.Source
+        }
+        
+        # pwshが見つからない場合はpowershell.exeを使用
+        Write-Debug "PowerShell Core (pwsh)が見つからないため、Windows PowerShellを使用します"
+        return "powershell.exe"
+    }
+    catch {
+        Write-Debug "PowerShellパスの取得中にエラーが発生: $($_.Exception.Message)"
+        return "powershell.exe"
+    }
+}
+
 function New-ScriptShortcut {
     [CmdletBinding()]
     param (
@@ -95,9 +125,13 @@ function New-ScriptShortcut {
         Write-Debug "ショートカットオブジェクトを作成"
         $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
         
+        # PowerShellパスを取得して設定
+        $psPath = Get-PowerShellPath
+        Write-Debug "使用するPowerShellパス: $psPath"
+        
         # プロパティを設定
         Write-Debug "ショートカットのプロパティを設定"
-        $Shortcut.TargetPath = "powershell.exe"
+        $Shortcut.TargetPath = $psPath
         $Shortcut.Arguments = "-File `"$ScriptPath`""
         $Shortcut.WorkingDirectory = [System.IO.Path]::GetDirectoryName($ScriptPath)
         

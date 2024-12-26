@@ -1,0 +1,6 @@
+{
+    "powershell.powerShellAdditionalExePaths": {
+        "exePath": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+    },
+    "files.insertFinalNewline": true
+}

@@ -11,7 +11,7 @@
 ファイル名: open-folder-videofiles-with-losslesscut.ps1
 作成者: 7rikazhexde
 作成日: 2024/08/17
-バージョン: 0.1
+バージョン: 0.1.0
 
 このスクリプトはUTF-8 with BOM エンコーディングで保存してください。
 

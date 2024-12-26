@@ -17,7 +17,7 @@ WSL（Windows Subsystem for Linux）のフォルダ構造をGUI(WPF)で表示し
 ファイル名: open-explorer-wsl-folder-action.ps1
 作成者: 7rikazhexde
 作成日: 2024/12/26
-バージョン: 0.1
+バージョン: 0.1.1
 
 1) このスクリプトはUTF-8 with BOM エンコーディングで保存してください。
 2) タスクバーからの実行設定：
@@ -47,7 +47,7 @@ if ($PSBoundParameters['Debug']) {
 }
 
 # デバッグ出力制御関数
-function Suppress-Output {
+function Write-SuppressedOutput {
     param($expression)
     if ($DebugPreference -eq 'Continue') {
         if ($expression -is [ScriptBlock]) {
@@ -120,7 +120,7 @@ function UpdateFolderList {
     param ($path)
     Write-Debug "Updating folder list for path: $path"
     
-    Suppress-Output $folderList.Items.Clear()
+    Write-SuppressedOutput $folderList.Items.Clear()
 
     try {
         # 昇順・降順の設定に基づいてソート
@@ -138,7 +138,7 @@ function UpdateFolderList {
                 Name = $folder.Name
                 FullPath = $folder.FullName
             }
-            Suppress-Output $folderList.Items.Add($item)
+            Write-SuppressedOutput $folderList.Items.Add($item)
             Write-Debug "Added folder: $($folder.Name)"
         }
     } catch {
@@ -154,7 +154,7 @@ $folderList.SelectedValuePath = "FullPath"
 
 # 初期状態を設定
 Write-Debug "Setting initial folder list"
-Suppress-Output (UpdateFolderList $currentPath)
+Write-SuppressedOutput (UpdateFolderList $currentPath)
 
 # イベントハンドラ: 上へ移動
 $upButton.Add_Click({
@@ -163,7 +163,7 @@ $upButton.Add_Click({
     if ($parentPath -and $parentPath.FullName -match "^\\\\wsl\.localhost\\Ubuntu") {
         Write-Debug "Moving to parent folder: $($parentPath.FullName)"
         $defaultPathBox.Text = $parentPath.FullName
-        Suppress-Output (UpdateFolderList $parentPath.FullName)
+        Write-SuppressedOutput (UpdateFolderList $parentPath.FullName)
     } else {
         Write-Debug "Cannot move up further"
         [System.Windows.MessageBox]::Show("これ以上上のフォルダには移動できません。", "情報", "OK", "Information")
@@ -223,12 +223,12 @@ $cancelButton.Add_Click({
 # イベントハンドラ: ソート順変更時に一覧を更新
 $ascendingSort.Add_Checked({
     Write-Debug "Sort order changed to ascending"
-    Suppress-Output (UpdateFolderList $defaultPathBox.Text)
+    Write-SuppressedOutput (UpdateFolderList $defaultPathBox.Text)
 })
 
 $descendingSort.Add_Checked({
     Write-Debug "Sort order changed to descending"
-    Suppress-Output (UpdateFolderList $defaultPathBox.Text)
+    Write-SuppressedOutput (UpdateFolderList $defaultPathBox.Text)
 })
 
 # イベントハンドラ: フォルダをダブルクリックした場合に移動
@@ -238,10 +238,10 @@ $folderList.Add_MouseDoubleClick({
     if ($selectedItem) {
         Write-Debug "Moving to folder: $($selectedItem.FullPath)"
         $defaultPathBox.Text = $selectedItem.FullPath
-        Suppress-Output (UpdateFolderList $selectedItem.FullPath)
+        Write-SuppressedOutput (UpdateFolderList $selectedItem.FullPath)
     }
 })
 
 Write-Debug "Starting GUI..."
 # ウィンドウを表示
-Suppress-Output $window.ShowDialog()
+Write-SuppressedOutput $window.ShowDialog()
