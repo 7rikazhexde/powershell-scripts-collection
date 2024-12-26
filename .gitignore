@@ -1,0 +1,21 @@
+# PowerShell
+*.pssproj
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# その他
+*.log
