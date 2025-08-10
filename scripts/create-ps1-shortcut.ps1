@@ -19,8 +19,8 @@ PowerShellスクリプト（.ps1）用のショートカット作成GUIツール
 .NOTES
 ファイル名: create-ps1-shortcut.ps1
 作成者: 7rikazhexde
-作成日: 2024/12/26
-バージョン: 0.1.1
+作成日: 2025/08/11
+バージョン: 0.1.2
 
 このスクリプトはUTF-8 with BOM エンコーディングで保存してください。
 
@@ -159,9 +159,9 @@ function Show-CustomDialog {
     $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ショートカット作成完了" Height="250" Width="600"
+        Title="ショートカット作成完了" Height="300" Width="600"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="CanResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
