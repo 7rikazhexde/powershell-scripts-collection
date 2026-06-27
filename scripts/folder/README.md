@@ -38,17 +38,6 @@ WSLのフォルダ構造をGUI（WPF）で表示し、操作するツール。
 .\open-explorer-wsl-folder-action.ps1 -Debug
 ```
 
-### [open-folder-videofiles-with-losslesscut.ps1](./open-folder-videofiles-with-losslesscut.ps1)
-
-選択したフォルダ内の動画ファイルをLosslessCutで複数起動するスクリプト。
-
-- 複数の動画フォーマットに対応
-- 再帰的なファイル検索
-- LosslessCutの複数インスタンス実行対応
-
-実行前に、スクリプト先頭の `$losslessCutPath` をご利用環境の `LosslessCut.exe` のパスに合わせて変更してください。
-また、LosslessCutの設定で「同時に複数のインスタンスを実行する（実験的）」を有効にしてください。
-
 ## 補足
 
 - WSL関連スクリプトは `\\wsl.localhost\Ubuntu` を起点に動作します（ディストリビューションが異なる場合はスクリプト内のパスを調整してください）。

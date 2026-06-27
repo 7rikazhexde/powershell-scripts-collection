@@ -20,7 +20,7 @@ PowerShellスクリプト（.ps1）用のショートカット作成GUIツール
 ファイル名: create-ps1-shortcut.ps1
 作成者: 7rikazhexde
 作成日: 2025/08/11
-バージョン: 0.1.2
+バージョン: 0.1.3
 
 このスクリプトはUTF-8 with BOM エンコーディングで保存してください。
 
@@ -33,7 +33,11 @@ PowerShell実行環境に関する注意事項:
 1. ショートカットをタスクバーにピン留めする場合:
    その他のオプションを確認 > タスクバーにピン留めする(K)
 
-2. 実行ポリシーや引数を個別に指定する場合:
+2. 作成されるショートカットには既定で以下の引数が付与されます:
+   -NoProfile -ExecutionPolicy RemoteSigned -File "<スクリプトパス>"
+   プロファイルの読み込みを抑止し、署名済みまたはローカルで作成したスクリプトのみ実行を許可します。
+
+3. 実行ポリシーや引数を個別に指定する場合:
    プロパティ > ショートカット > リンク先
 
 .EXAMPLE
@@ -132,7 +136,7 @@ function New-ScriptShortcut {
         # プロパティを設定
         Write-Debug "ショートカットのプロパティを設定"
         $Shortcut.TargetPath = $psPath
-        $Shortcut.Arguments = "-File `"$ScriptPath`""
+        $Shortcut.Arguments = "-NoProfile -ExecutionPolicy RemoteSigned -File `"$ScriptPath`""
         $Shortcut.WorkingDirectory = [System.IO.Path]::GetDirectoryName($ScriptPath)
         
         Write-Debug "ショートカットを保存"

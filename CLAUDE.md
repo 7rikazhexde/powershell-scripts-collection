@@ -8,7 +8,8 @@ A collection of standalone PowerShell scripts for simplifying Windows, Windows a
 
 Scripts are organized into topic subdirectories under `scripts/`:
 
-- `scripts/folder/` — Explorer/folder operations (the WSL browser tools and the LosslessCut launcher).
+- `scripts/folder/` — Explorer/folder operations (the WSL browser tools).
+- `scripts/losslesscut/` — LosslessCut integration (the video-file launcher).
 - `scripts/powershell/` — PowerShell-related utilities (the .ps1 shortcut creator).
 - `scripts/claudecode/` — Claude Code authoring helpers (e.g. installing skills).
 
@@ -39,6 +40,8 @@ These patterns are shared across the original GUI scripts and should be preserve
 - **Debug pattern.** Use `[CmdletBinding()] param()`, then `if ($PSBoundParameters['Debug']) { $DebugPreference = 'Continue' }`, and instrument with `Write-Debug`. The `-Debug` switch is provided automatically by `CmdletBinding`, not declared manually.
 - **Output suppression.** `open-explorer-wsl-folder-action.ps1` wraps WPF calls that return values (e.g. `.Items.Add`, `.ShowDialog`) in `Write-SuppressedOutput` so they don't leak to the pipeline unless debugging.
 - **Language split.** Code comments, UI strings, and docs are written in Japanese; identifiers and PowerShell idioms are English.
+- **Version bump rule (applies to all scripts).** Whenever you change a script's behavior, bump its `.NOTES` `バージョン` (patch for fixes/tweaks, e.g. `0.1.2` → `0.1.3`) and update the surrounding notes in the same edit. Do not mass-bump unchanged scripts — the version tracks that one script's own history. A pure file move/rename with no behavior change does not require a bump.
+- **Generated launcher shortcuts use a safe execution policy.** Shortcuts produced by `create-ps1-shortcut.ps1` set their arguments to `-NoProfile -ExecutionPolicy RemoteSigned -File "<path>"`. Keep `-NoProfile` (avoid profile interference) and prefer `RemoteSigned` over `Bypass` (still honors MOTW; allows only signed or locally-authored scripts). `-File` must remain last, since everything after it is passed to the target script.
 
 ## GUI script structure
 
@@ -59,4 +62,4 @@ WSL scripts target the `\\wsl.localhost\Ubuntu` UNC root. The "open in VSCode" a
 
 ## Environment-specific paths
 
-`open-folder-videofiles-with-losslesscut.ps1` hard-codes `$losslessCutPath` (the LosslessCut.exe location) at the top of the file and `Test-Path`-guards it. This is intentionally machine-specific — point users to edit that variable rather than committing a different absolute path.
+`scripts/losslesscut/open-folder-videofiles-with-losslesscut.ps1` hard-codes `$losslessCutPath` (the LosslessCut.exe location) at the top of the file and `Test-Path`-guards it. This is intentionally machine-specific — point users to edit that variable rather than committing a different absolute path.
