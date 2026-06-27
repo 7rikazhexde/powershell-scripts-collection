@@ -1,16 +1,13 @@
 # powershell-scripts-collection
 
-Windowsとそのアプリケーション、およびWSL（Windows Subsystem for Linux）の操作を簡素化するPowerShellスクリプト集です。
+Windowsとそのアプリケーション、WSL（Windows Subsystem for Linux）、およびClaude Codeの操作を簡素化するPowerShellスクリプト集です。
 
 ## 目次
 
 - [powershell-scripts-collection](#powershell-scripts-collection)
   - [目次](#目次)
-  - [スクリプト一覧](#スクリプト一覧)
-    - [open-explorer-wsl.ps1](#open-explorer-wslps1)
-    - [open-explorer-wsl-folder-action.ps1](#open-explorer-wsl-folder-actionps1)
-    - [create-ps1-shortcut.ps1](#create-ps1-shortcutps1)
-    - [open-folder-videofiles-with-losslesscut.ps1](#open-folder-videofiles-with-losslesscutps1)
+  - [ディレクトリ構成](#ディレクトリ構成)
+  - [スクリプトカテゴリ](#スクリプトカテゴリ)
   - [使用方法](#使用方法)
     - [要件](#要件)
     - [セキュリティ設定](#セキュリティ設定)
@@ -19,44 +16,29 @@ Windowsとそのアプリケーション、およびWSL（Windows Subsystem for 
       - [スクリプトをローカルで信頼済みとして扱う](#スクリプトをローカルで信頼済みとして扱う)
   - [ライセンス](#ライセンス)
 
-## スクリプト一覧
+## ディレクトリ構成
 
-### [open-explorer-wsl.ps1](./scripts/open-explorer-wsl.ps1)
+スクリプトは用途別に `scripts/` 配下のサブディレクトリへ分類しています。
+各スクリプトの詳細は、各ディレクトリのREADMEを参照してください。
 
-WSLのフォルダをWindows Explorerで開くシンプルなツール。
+```text
+scripts/
+├── folder/      # エクスプローラー／フォルダ操作系
+├── powershell/  # PowerShellスクリプト関連
+└── claudecode/  # Claude Code関連
+```
 
-- 指定したWSLパスをエクスプローラーで開く
-- コマンドライン引数でターゲットフォルダを指定可能
+## スクリプトカテゴリ
 
-### [open-explorer-wsl-folder-action.ps1](./scripts/open-explorer-wsl-folder-action.ps1)
-
-WSLのフォルダ構造をGUI（WPF）で表示し、操作するツール。
-
-- フォルダのブラウズと移動
-- エクスプローラーでフォルダを開く
-- WSL上のVSCodeでフォルダを開く
-- 上位フォルダへの移動
-- デバッグモード対応
-
-### [create-ps1-shortcut.ps1](./scripts/create-ps1-shortcut.ps1)
-
-PowerShellスクリプト（.ps1）のショートカットを作成するためのGUIツール。
-
-- ファイル選択ダイアログでps1ファイルを選択
-- 選択したスクリプトと同じディレクトリにショートカットを作成
-- デバッグモード対応
-
-### [open-folder-videofiles-with-losslesscut.ps1](./scripts/open-folder-videofiles-with-losslesscut.ps1)
-
-選択したフォルダ内の動画ファイルをLosslessCutで複数起動するスクリプト
-
-- 複数の動画フォーマットに対応
-- 再帰的なファイル検索
-- LosslessCutの複数インスタンス実行対応
+| カテゴリ | 概要 | スクリプト |
+| --- | --- | --- |
+| [folder](./scripts/folder/) | エクスプローラー／フォルダ操作系 | `open-explorer-wsl.ps1` / `open-explorer-wsl-folder-action.ps1` / `open-folder-videofiles-with-losslesscut.ps1` |
+| [powershell](./scripts/powershell/) | PowerShellスクリプト関連 | `create-ps1-shortcut.ps1` |
+| [claudecode](./scripts/claudecode/) | Claude Code関連 | `Install-Skill.ps1` |
 
 ## 使用方法
 
-各スクリプトの詳細な使用方法は、スクリプトファイル内のコメントを参照してください。
+各スクリプトの詳細な使用方法は、各ディレクトリのREADME、およびスクリプトファイル内のコメントを参照してください。
 
 ### 要件
 
