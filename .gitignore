@@ -9,6 +9,7 @@
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+*.lnk
 
 # Visual Studio Code
 .vscode/*

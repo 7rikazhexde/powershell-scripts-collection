@@ -26,7 +26,8 @@ scripts/
 ├── folder/       # エクスプローラー／フォルダ操作系
 ├── losslesscut/  # 動画ファイルをLosslessCutで起動
 ├── powershell/   # PowerShellスクリプト関連
-└── claudecode/   # Claude Code関連
+├── claudecode/   # Claude Code関連
+└── video/        # 動画変換関連（ffmpeg再エンコード）
 ```
 
 ## スクリプトカテゴリ
@@ -37,6 +38,7 @@ scripts/
 | [losslesscut](./scripts/losslesscut/) | 動画ファイル操作（LosslessCut連携） | `open-folder-videofiles-with-losslesscut.ps1` |
 | [powershell](./scripts/powershell/) | PowerShellスクリプト関連 | `create-ps1-shortcut.ps1` |
 | [claudecode](./scripts/claudecode/) | Claude Code関連 | `Install-Skill.ps1` |
+| [video](./scripts/video/) | 動画変換関連（ffmpeg再エンコード） | `VideoReencoder.ps1` |
 
 ## 使用方法
 
